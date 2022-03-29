@@ -8,24 +8,25 @@ class Data_Base():
     def __init__(self):
 
         Data_Base.cursor.execute('''CREATE TABLE IF NOT EXISTS expenses
-                            (data text, cost float)''') 
+                            (data text, type text, cost float)''') 
         
     
-    def add_in_bd(self, cost):
+    def add_in_bd(self, cost, type):
 
 
         query = '''INSERT INTO expenses VALUES 
-                        (?, ?)'''
+                        (?, ?, ?)'''
         
         today = str(datetime.now())
-        Data_Base.cursor.execute(query, (today, cost))
+        Data_Base.cursor.execute(query, (today, type, cost))
         Data_Base.con.commit()
 
-    def get_all_cost(self):
+
+    def get_all_cost(self, typ):
         expenses = 0
-        for cost in Data_Base.cursor.execute(''' SELECT cost FROM expenses'''):
-            print(cost[0])
-            expenses += int(cost[0])
+        for cost in Data_Base.cursor.execute(f''' SELECT cost FROM expenses WHERE type = "{typ}"'''):
+            print(cost)
+            expenses += float(cost[0])
         
         return expenses
 
