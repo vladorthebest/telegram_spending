@@ -26,7 +26,7 @@ def ask(message):
     bot.register_next_step_handler(message, get_bd)
 
 def get_bd(message):
-    all_spending = base.get_all_cost(message.text)
+    all_spending = base.get_all_cost(message.text, message.chat.id)
     bot.send_message(message.chat.id, f"{message.text} : {all_spending}")
 
 
@@ -39,7 +39,7 @@ def plus(message, typ):
     try:
         lost = float(message.text)
         print(typ, lost)
-        base.add_in_bd(lost, typ)
+        base.add_in_bd(lost, typ, message.chat.id)
         bot.send_message(message.chat.id, f"Запись добавлена!\n{typ}:{lost}")
 
     except:
