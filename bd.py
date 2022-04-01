@@ -41,7 +41,7 @@ class Data_Base():
 
         print(f"Result {user_id}: {typ} {expenses}") #log
 
-        return expenses
+        return round(expenses, 2)
 
             
 
