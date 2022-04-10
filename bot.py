@@ -35,16 +35,22 @@ def get_bd(message):
 #text - add new record in the DataBase
 @bot.message_handler(content_types=['text'])
 def ask(message):
-    message_typ = message #input category record
-    bot.register_next_step_handler(message, plus, message_typ)
+    message_typ = message.text #input category record
+    all_types = ['Продукты', 'Подарок', 'Путешествие']
+    if message_typ in all_types:
+        bot.send_message(message.chat.id, "Категория выбрана!")
+        bot.register_next_step_handler(message, plus, message_typ)
+    else:
+        bot.send_message(message.chat.id, "Такой категории нет!")
+        
     
 
 def plus(message, message_typ):
     try:
         lost = float(message.text) #user result
         
-        base.add_in_bd(lost, message_typ.text, message.chat.id) #add record in the DataBase
-        bot.send_message(message.chat.id, f"Запись добавлена!\n{message_typ.text}:{lost}") #send alert about add record for user 
+        base.add_in_bd(lost, message_typ, message.chat.id) #add record in the DataBase
+        bot.send_message(message.chat.id, f"Запись добавлена!\n{message_typ}:{lost}") #send alert about add record for user 
 
 
     #if user result doesn`t float/int

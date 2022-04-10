@@ -39,9 +39,10 @@ class Data_Base():
         for cost in Data_Base.cursor.execute(f''' SELECT cost FROM expenses WHERE type = "{typ}" AND user_id = "{user_id}"'''):
             expenses += float(cost[0]) #add cost in the cost amount
 
+        expenses = round(expenses, 2)
         print(f"Result {user_id}: {typ} {expenses}") #log
 
-        return round(expenses, 2)
+        return expenses
 
             
 
